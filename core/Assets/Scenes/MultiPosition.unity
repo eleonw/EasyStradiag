@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 760233074}
   - component: {fileID: 760233073}
   m_Layer: 0
-  m_Name: VideoStreaming
+  m_Name: IPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

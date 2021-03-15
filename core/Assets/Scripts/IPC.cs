@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using System.Collections;
 using UnityEngine;
 using Unity.WebRTC;
 using WebSocketSharp;
 
-public class VideoStreaming : MonoBehaviour
+public class IPC : MonoBehaviour
 {
 
     [SerializeField] private Camera cam;
@@ -21,6 +22,7 @@ public class VideoStreaming : MonoBehaviour
     private EventHandler<MessageEventArgs> onWebSocketMessage;
 
     private VideoStreamTrack videoStreamTrack;
+    private RTCDataChannel dataChannel;
     private bool videoUpdateStarted;
     private RTCOfferOptions _offerOptions = new RTCOfferOptions
     {
@@ -98,6 +100,11 @@ public class VideoStreaming : MonoBehaviour
         }
     }
 
+    private void OnDCMessage(byte[] bytes) {
+        string message = Encoding.UTF8.GetString(bytes);
+        Debug.Log($"Data channel received from Node: {message}");
+    }
+
     private void GreetNode() {
         var message = new SignalingMessage {
             type = "message",
@@ -142,6 +149,10 @@ public class VideoStreaming : MonoBehaviour
     private void OnIceConnectionChange(RTCIceConnectionState state)
     {
         Debug.Log($"IceConnection state changed to {state}");
+        if (state == RTCIceConnectionState.Connected) {
+            ws.Close();
+            Debug.Log("Close WebSocket.");
+        }
     }
 
 
@@ -151,17 +162,22 @@ public class VideoStreaming : MonoBehaviour
         pc = new RTCPeerConnection(ref configuration);
         pc.OnIceCandidate = OnIceCandidate;
         pc.OnIceConnectionChange = OnIceConnectionChange;
+        pc.OnDataChannel = OnDataChannel;
 
         videoStreamTrack = cam.CaptureStreamTrack(width, height, 1000000);
         pc.AddTrack(videoStreamTrack);
-        
+        dataChannel = pc.CreateDataChannel("data", default);
+        dataChannel.OnMessage = OnDCMessage;
+
         if (!videoUpdateStarted) {
             StartCoroutine(WebRTC.Update());
             videoUpdateStarted = true;
         }
     }
-
-
+    private void OnDataChannel(RTCDataChannel channel) {
+        dataChannel = channel;
+        dataChannel.OnMessage = OnDCMessage;
+    }
     private IEnumerator OnOffer(RTCSessionDescription desc) {
         Debug.Log("OnOffer");
         Debug.Log("SetRemoteDescription start");
