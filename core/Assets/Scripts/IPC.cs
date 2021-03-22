@@ -13,6 +13,7 @@ public class IPC : MonoBehaviour
     [SerializeField] private int width;
     [SerializeField] private int height;
     [SerializeField] private int portNo;
+    [SerializeField] private bool active;
 
     private WebSocket ws;
 
@@ -38,8 +39,10 @@ public class IPC : MonoBehaviour
     void Awake()
     {
         mainThreadSyncCtx = SynchronizationContext.Current;
-        InitializeWebRTC();
-        InitializeWebSocket();
+        if (active) {
+            InitializeWebRTC();
+            InitializeWebSocket();
+        }
     }
 
     // Start is called before the first frame update
