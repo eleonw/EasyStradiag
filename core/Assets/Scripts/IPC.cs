@@ -6,6 +6,27 @@ using UnityEngine;
 using Unity.WebRTC;
 using WebSocketSharp;
 
+public class GlobalEyeData {
+    public bool hit;
+    public Vector3 leftOrigin;
+    public Vector3 leftDirection;
+    public Vector3 rightOrigin;
+    public Vector3 rightDirection;
+    public Vector3 targetPosition;
+    public Vector3 expectedDirection;
+    public float strabismusDegree;
+}
+public class RoutedEyeData {
+    public string leftOrigin;
+    public string leftDirection;
+    public string rightDirection;
+    public string rightOrigin;
+    public string targetPosition;
+    public string expectedDirection;
+    public string strabismusDegree;
+    public bool hit;
+}
+
 public class IPC : MonoBehaviour
 {
 
@@ -15,7 +36,10 @@ public class IPC : MonoBehaviour
     [SerializeField] private int portNo;
     [SerializeField] private bool active;
 
+    public static IPC Instance;
+
     private WebSocket ws;
+    private bool dcOpened;
 
     private RTCPeerConnection pc;
     private DelegateOnIceCandidate onIceCandidate;
@@ -36,6 +60,10 @@ public class IPC : MonoBehaviour
     private SynchronizationContext mainThreadSyncCtx;
     private SendOrPostCallback onOfferCallBack;
 
+    public IPC(): base() {
+        Instance = this;
+    }
+
     void Awake()
     {
         mainThreadSyncCtx = SynchronizationContext.Current;
@@ -48,7 +76,7 @@ public class IPC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        dcOpened = false;
     }
 
     // Update is called once per frame
@@ -123,7 +151,7 @@ public class IPC : MonoBehaviour
         SendMessage(message1);
     }
 
-    private static RTCConfiguration GetSelectedSdpSemantics()
+    private RTCConfiguration GetSelectedSdpSemantics()
     {
         RTCConfiguration config = default;
         config.iceServers = new[] { new RTCIceServer { urls = new[] { "stun:stun.l.google.com:19302" } } };
@@ -159,7 +187,7 @@ public class IPC : MonoBehaviour
     }
 
 
-    private void InitializeWebRTC() {
+   private void InitializeWebRTC() {
         WebRTC.Initialize(EncoderType.Software);
         var configuration = GetSelectedSdpSemantics();
         pc = new RTCPeerConnection(ref configuration);
@@ -177,9 +205,33 @@ public class IPC : MonoBehaviour
             videoUpdateStarted = true;
         }
     }
+
+    private string GetVector3Str(Vector3 vec) {
+        return $"({vec.x.ToString("F4")},{vec.y.ToString("F4")},{vec.z.ToString("F4")})" ;
+    }
+    public void SendEyeData(GlobalEyeData eyeData) {
+
+        var data = new RoutedEyeData();
+
+        data.leftDirection = GetVector3Str(eyeData.leftDirection);
+        data.rightDirection = GetVector3Str(eyeData.rightDirection);
+        data.leftOrigin = GetVector3Str(eyeData.leftOrigin);
+        data.rightOrigin = GetVector3Str(eyeData.rightOrigin);
+        data.hit = eyeData.hit;
+        if (eyeData.hit) {
+            data.targetPosition = GetVector3Str(eyeData.targetPosition);
+            data.expectedDirection = GetVector3Str(eyeData.expectedDirection);
+            data.strabismusDegree = eyeData.strabismusDegree.ToString("F4");
+        }
+        if (dcOpened) {
+            dataChannel.Send(JsonUtility.ToJson(data));
+        }
+    }
     private void OnDataChannel(RTCDataChannel channel) {
+        Debug.Log("OnDataChannel");
         dataChannel = channel;
         dataChannel.OnMessage = OnDCMessage;
+        dcOpened = true;
     }
     private IEnumerator OnOffer(RTCSessionDescription desc) {
         Debug.Log("OnOffer");

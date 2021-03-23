@@ -18,7 +18,7 @@ public class Sphere : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetDistanceAngle(0.6f, Mathf.PI / 6);
+        SetDistanceAngle(0.6f, Mathf.PI * 5 / 36);
         timeCounter = 0;
         transform.Translate(GetPosition(), transform.parent);
     }
@@ -49,10 +49,12 @@ public class Sphere : MonoBehaviour
 
     public void Hit() {
         Renderer.material.color = Color.green;
+        //Debug.Log("hit");
 
     }
     public void UnHit() {
         Renderer.material.color = Color.white;
+        //Debug.Log("unHit");
     }
 
 }

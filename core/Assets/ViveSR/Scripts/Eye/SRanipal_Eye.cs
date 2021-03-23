@@ -46,9 +46,9 @@ namespace ViveSR
                     for (int i = 0; i < WeightingCount; ++i) Weightings.Add((EyeShape)i, 0.0f);
                 }
                 
-                public static EyeData GetEyeData() {
+                public static void GetEyeData(out EyeData eyeData) {
                     UpdateData();
-                    return EyeData_;
+                    eyeData = EyeData_;
                 }
 
                 private static bool UpdateData()
