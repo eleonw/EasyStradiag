@@ -18,36 +18,40 @@
         <div class="header">数据面板</div>
         <div class="panel">
           <div class="data">
-            <div class="data-header">左眼位置坐标</div>
-            <div id="left-origin"></div>
+            <div class="data-header">注视状态:</div>
+            <div id="hit"></div>
           </div>
           <div class="data">
-            <div class="data-header">左眼注视方向</div>
-            <div id="left-direction"></div>
+            <div class="data-header">左眼位置坐标:</div>
+            <div id="left-origin">(0,0,0)</div>
           </div>
           <div class="data">
-            <div class="data-header">右眼位置坐标</div>
-            <div id="right-origin"></div>
+            <div class="data-header">左眼注视方向:</div>
+            <div id="left-direction">(0,0,0)</div>
           </div>
           <div class="data">
-            <div class="data-header">右眼注视方向</div>
-            <div id="right-direction"></div>
+            <div class="data-header">右眼位置坐标:</div>
+            <div id="right-origin">(0,0,0)</div>
           </div>
           <div class="data">
-            <div class="data-header">目标物体位置</div>
-            <div id="target-position"></div>
+            <div class="data-header">右眼注视方向:</div>
+            <div id="right-direction">(0,0,0)</div>
           </div>
           <div class="data">
-            <div class="data-header">主视眼注视点坐标</div>
-            <div id="focus-point"></div>
+            <div class="data-header">目标物体角度位置:</div>
+            <div id="target-angular-position">0°</div>
           </div>
           <div class="data">
-            <div class="data-header">测试眼期望注视方向</div>
-            <div id="expected-direction"></div>
+            <div class="data-header">主视眼注视点坐标:</div>
+            <div id="focus-point">(0,0,0)</div>
           </div>
           <div class="data">
-            <div class="data-header">测试眼实时斜视度数</div>
-            <div id="strabismus-degree"></div>
+            <div class="data-header">测试眼期望注视方向:</div>
+            <div id="expected-direction">(0,0,0)</div>
+          </div>
+          <div class="data">
+            <div class="data-header">测试眼实时斜视度数:</div>
+            <div id="strabismus-degree">0°</div>
           </div>
         </div>
       </div>
@@ -71,20 +75,22 @@
           </div>
           <div class="control">
             <div class="control-header">主视眼</div>
-            <input id="select-left" type="radio">左眼
-            <input id="select-right" type="radio">右眼
+            <input id="select-left" type="radio" name="eye" value="0">左眼
+            <input id="select-right" type="radio" name="eye" value="1">右眼
           </div>
         </div>
       </div>
     </div>
     
-    
 
+    <div id="chart">
+      
+    </div>
     
   </body>
 
-
+  <script src="./js/chart.js"></script>
   <script src="./js/index.js"></script>
   <script src="./js/signaling.js"></script>
-   
+  
 </html>

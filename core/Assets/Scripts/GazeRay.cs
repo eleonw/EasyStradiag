@@ -11,8 +11,14 @@ public class GazeRay : MonoBehaviour
     [SerializeField] private LineRenderer GazeRayRenderer;
     [SerializeField] private GameObject TargetObject;
 
+    public static GazeRay Instance;
+
     private GazeIndex BaseEye = GazeIndex.RIGHT;
     private Transform mainCamTransform;
+
+    void Awake() {
+        Instance = this;    
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -69,22 +75,29 @@ public class GazeRay : MonoBehaviour
             targetDirection = leftDirectionGlobal;
         }
 
+        globalEyeData.targetAngularPosition = Sphere.Instance.GetAngularPosition();
+
         if (Physics.Raycast(baseOrigin, baseDirection, out hitInfo, Mathf.Infinity)) {
             globalEyeData.hit = true;
-            globalEyeData.targetPosition = hitInfo.point;
+            globalEyeData.focusPoint = hitInfo.point;
             globalEyeData.expectedDirection = Vector3.Normalize(hitInfo.point - targetOrigin);
             globalEyeData.strabismusDegree = Vector3.Angle(targetDirection, globalEyeData.expectedDirection);
             TargetObject.SendMessage("Hit");
         } else {
+            globalEyeData.hit = false;
             TargetObject.SendMessage("UnHit");
         }
 
         IPC.Instance.SendEyeData(globalEyeData);
 
-        Debug.Log("originGlobal: " + "x: " + baseOrigin.x.ToString("F4") + "y: " + baseOrigin.y.ToString("F4") + "z: " + baseOrigin.z.ToString("F4")
-            + "\n  direction Global: " + "x: " + baseDirection.x.ToString("F4") + "y: " + baseDirection.y.ToString("F4") + "z: " + baseDirection.z.ToString("F4"));
+        //Debug.Log("originGlobal: " + "x: " + baseOrigin.x.ToString("F4") + "y: " + baseOrigin.y.ToString("F4") + "z: " + baseOrigin.z.ToString("F4")
+        //    + "\n  direction Global: " + "x: " + baseDirection.x.ToString("F4") + "y: " + baseDirection.y.ToString("F4") + "z: " + baseDirection.z.ToString("F4"));
 
         GazeRayRenderer.SetPosition(0, baseOrigin - Camera.main.transform.up * 0.05f);
         GazeRayRenderer.SetPosition(1, baseOrigin + baseDirection * 10);
+    }
+
+    public void SetBaseEye(GazeIndex gaze) {
+        BaseEye = gaze;
     }
 }

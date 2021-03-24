@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Sphere : MonoBehaviour
 {
+    public static Sphere Instance;
+
     [SerializeField] Renderer Renderer;
 
     public float distance;
@@ -12,38 +14,71 @@ public class Sphere : MonoBehaviour
     private Vector3 center;
 
     private float speed = 0.5f;
+    private float angularPosition;
 
-    private float timeCounter;
+    private bool move;
+
+    private void Awake() {
+        Instance = this;
+        move = false;
+    }
+    
+    private void SetDefaultMeta() {
+        SetMetaData(.6f, 0, 0);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        SetDistanceAngle(0.6f, Mathf.PI * 5 / 36);
-        timeCounter = 0;
-        transform.Translate(GetPosition(), transform.parent);
+        SetDefaultMeta();
+        transform.localPosition = GetPosition();
     }
 
     // Update is called once per frame
     void Update()
     { 
-        timeCounter += Time.deltaTime;
-        transform.localPosition = GetPosition();
+        if (move) {
+            angularPosition += Time.deltaTime * speed;
+            angularPosition = angularPosition >= 2 * Mathf.PI ? angularPosition - 2 * Mathf.PI : angularPosition;
+            transform.localPosition = GetPosition();
+        }
     }
 
     private Vector3 GetPosition() {
-        float angle = timeCounter * speed;
         Vector3 relativePos = new Vector3 {
-            x = Mathf.Cos(angle) * radius,
-            y = Mathf.Sin(angle) * radius,
+            x = Mathf.Cos(angularPosition) * radius,
+            y = Mathf.Sin(angularPosition) * radius,
             z = 0
         };
         return center + relativePos;
     }
+    public float GetAngularPosition() {
+        return angularPosition / Mathf.PI * 180;
+    }
+
+    public void StartMove(float distance, float angle, float speed) {
+        if (!move) {
+            SetMetaData(distance, angle, speed);
+            move = true;
+        }
+    }
+
+    public void PauseMove() {
+        move = false;
+    }
+
+    public void StopMove() {
+        move = false;
+        SetDefaultMeta();
+        transform.localPosition = GetPosition();
+    }
     
-    private void SetDistanceAngle(float distance, float angle) {
+    private void SetMetaData(float distance, float angle, float speed) {
+        angularPosition = 0;
+        this.speed = speed;
         this.distance = distance;
-        this.angle = angle;
-        this.radius = Mathf.Tan(angle) * distance;
+        this.angle = (angle / 180) * Mathf.PI;
+        this.radius = Mathf.Tan(this.angle) * distance;
         this.center = new Vector3(0, 0, distance);
     }
 

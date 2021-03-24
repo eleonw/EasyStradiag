@@ -5,6 +5,7 @@ using System.Collections;
 using UnityEngine;
 using Unity.WebRTC;
 using WebSocketSharp;
+using ViveSR.anipal.Eye;
 
 public class GlobalEyeData {
     public bool hit;
@@ -12,8 +13,9 @@ public class GlobalEyeData {
     public Vector3 leftDirection;
     public Vector3 rightOrigin;
     public Vector3 rightDirection;
-    public Vector3 targetPosition;
+    public Vector3 focusPoint;
     public Vector3 expectedDirection;
+    public float targetAngularPosition;
     public float strabismusDegree;
 }
 public class RoutedEyeData {
@@ -21,10 +23,19 @@ public class RoutedEyeData {
     public string leftDirection;
     public string rightDirection;
     public string rightOrigin;
-    public string targetPosition;
+    public string focusPoint;
     public string expectedDirection;
+    public string targetAngularPosition;
     public string strabismusDegree;
     public bool hit;
+}
+
+public class RoutedControlData {
+    public int controlNo;
+    public float angle;
+    public float distance;
+    public float speed;
+    public int baseEyeIndex;
 }
 
 public class IPC : MonoBehaviour
@@ -134,6 +145,27 @@ public class IPC : MonoBehaviour
     private void OnDCMessage(byte[] bytes) {
         string message = Encoding.UTF8.GetString(bytes);
         Debug.Log($"Data channel received from Node: {message}");
+        var control = JsonUtility.FromJson<RoutedControlData>(message);
+
+        switch(control.controlNo) {
+            case 0:
+                if (control.baseEyeIndex == 0) {
+                    GazeRay.Instance.SetBaseEye(GazeIndex.LEFT);
+                } else {
+                    GazeRay.Instance.SetBaseEye(GazeIndex.RIGHT);
+                }
+                Sphere.Instance.StartMove(control.distance, control.angle, control.distance);
+                break;
+            case 1:
+                Sphere.Instance.PauseMove();
+                break;
+            case 2:
+                Sphere.Instance.StopMove();
+                break;
+            default:
+                Debug.Log("unknown controNO: " + control.controlNo);
+                break;
+        }
     }
 
     private void GreetNode() {
@@ -217,11 +249,12 @@ public class IPC : MonoBehaviour
         data.rightDirection = GetVector3Str(eyeData.rightDirection);
         data.leftOrigin = GetVector3Str(eyeData.leftOrigin);
         data.rightOrigin = GetVector3Str(eyeData.rightOrigin);
+        data.targetAngularPosition = eyeData.targetAngularPosition.ToString("F1");
         data.hit = eyeData.hit;
         if (eyeData.hit) {
-            data.targetPosition = GetVector3Str(eyeData.targetPosition);
+            data.focusPoint = GetVector3Str(eyeData.focusPoint);
             data.expectedDirection = GetVector3Str(eyeData.expectedDirection);
-            data.strabismusDegree = eyeData.strabismusDegree.ToString("F4");
+            data.strabismusDegree = eyeData.strabismusDegree.ToString("F1");
         }
         if (dcOpened) {
             dataChannel.Send(JsonUtility.ToJson(data));

@@ -80,6 +80,11 @@ body {
     margin-top: .8em;
 }
 
+.data {
+    display: flex;
+    flex-direction: row;
+}
+
 .data-header {
     min-width: 14em;
 }
@@ -87,4 +92,23 @@ body {
 button {
     border-radius: .3em;
     padding: .5em 1em;
+}
+
+#hit {
+
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+
+    background-color: red;
+}
+
+#chart {
+    position: absolute;
+    right: 30px;
+    top: 600px;
+
+    width: 200px;
+    height: 200px;
+    /* background-color: white; */
 }

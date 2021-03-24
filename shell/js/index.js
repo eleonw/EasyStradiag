@@ -1,6 +1,7 @@
 `use strict`;
 
 require('webrtc-adapter');
+var $ = require('jquery');
 
 const PORT_NO = 8081;
 
@@ -37,39 +38,110 @@ pc.oniceconnectionstatechange = e => {
 
 var dataElements = {
     left: {
-        origin: document.querySelector("#left-origin"),
-        direction: document.querySelector('#left-direction')
+        origin: $("#left-origin"),
+        direction: $('#left-direction')
     },
     right: {
-        origin: document.querySelector('#right-origin'),
-        direction: document.querySelector('#right-direction')
+        origin: $('#right-origin'),
+        direction: $('#right-direction')
     },
-    targetPosition: document.querySelector('#target-position'),
-    expectedDirection: document.querySelector('#expected-direction'),
-    strabismusDegree: document.querySelector('#strabismus-degree'),
+    focusPoint: $('#focus-point'),
+    targetAngularPosition: $('#target-angular-position'),
+    expectedDirection: $('#expected-direction'),
+    strabismusDegree: $('#strabismus-degree'),
+    hit: $('hit')
 }
 
 function changeText(element, text) {
-    element.innerText = text;
+    element.text(text);
 }
+
+let figureData = [];
 
 function onMessage(msg) {
 
     console.log("receive message through WebRTC from Unity: ", msg);
     let data = JSON.parse(msg.data);
-    console.log()
+    console.log(data)
 
     let eles = dataElements;
-    changeText(eles.left.origin, data.leftOrigin);
-    changeText(eles.left.direction, data.leftDirection);
-    changeText(eles.right.origin, data.rightOrigin);
-    changeText(eles.right.direction, data.rightDirection);
-    changeText(eles.targetPosition, data.targetPosition);
-    changeText(eles.strabismusDegree, data.strabismusDegree);
-    
+    changeText(eles.targetAngularPosition, data.targetAngularPosition + '°');
+    if (data.hit) {
+        eles.hit.css('background-color', '#00ff00');
+        changeText(eles.left.origin, data.leftOrigin);
+        changeText(eles.left.direction, data.leftDirection);
+        changeText(eles.right.origin, data.rightOrigin);
+        changeText(eles.right.direction, data.rightDirection);
+        changeText(eles.focusPoint, data.focusPoint);
+        changeText(eles.expectedDirection, data.expectedDirection);
+        changeText(eles.strabismusDegree, data.strabismusDegree + '°');
 
+        let angularPos = Number(data.targetAngularPosition);
+        let degree = Number(data.strabismusDegree);
+        if (angularPos % 1 === 0) {
+            figureData.push([degree, angularPos]);
+        }
+    } else {
+        eles.hit.css('background-color', '#ff0000');
+    }
+    
 }
 
+
+function enableInput() {
+    $('#angle').removeAttr('readonly');
+    $('#distance').removeAttr('readonly');
+    $('#speed').removeAttr('readonly');
+    $("#input[name='eye']").removeAttr('readonly');
+}
+
+function disableInput() {
+    $('#angle').attr('readonly', 'readonly');
+    $('#distance').attr('readonly', 'readonly');
+    $('#speed').attr('readonly', 'readonly');
+    $("input[name='eye']").attr('readonly', 'readonly');
+}
+
+$('#start').on('click', () => {
+
+    figureData = [];
+
+    plotFigure(figureData);
+    let controlData = {
+        controlNo: 0,
+        angle: Number($('#angle').val()),
+        distance: Number($('#distance').val()),
+        speed: Number($('#speed').val()),
+        eye: Number($("input[name='eye']:checked").val())
+    };
+
+    console.log(controlData);
+    dataChannel.send(JSON.stringify(controlData));
+    disableInput();
+})
+
+$('#pause').on('click', () => {
+    let controlData = {
+        controlNo: 1,
+    };
+    dataChannel.send(JSON.stringify(controlData));
+
+    plotFigure(figureData);
+})
+
+$('#stop').on('click', () => {
+    let controlData = {
+        controlNo: 2,
+    };
+    dataChannel.send(JSON.stringify(controlData));
+    $('#angle').val('');
+    $('#distance').val('');
+    $('#speed').val('');
+    $("input[name='eye']").removeAttr('checked');
+    enableInput();
+})
+
+plotFigure([0, 0]);
 
 
 
