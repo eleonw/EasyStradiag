@@ -16,7 +16,7 @@ public class Sphere : MonoBehaviour
     private float speed = 0.5f;
     private float angularPosition;
 
-    private bool move;
+    public bool move;
 
     private void Awake() {
         Instance = this;
@@ -37,11 +37,7 @@ public class Sphere : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        if (move) {
-            angularPosition += Time.deltaTime * speed;
-            angularPosition = angularPosition >= 2 * Mathf.PI ? angularPosition - 2 * Mathf.PI : angularPosition;
-            transform.localPosition = GetPosition();
-        }
+
     }
 
     private Vector3 GetPosition() {
@@ -57,6 +53,7 @@ public class Sphere : MonoBehaviour
     }
 
     public void StartMove(float distance, float angle, float speed) {
+        Debug.Log("start move");
         if (!move) {
             SetMetaData(distance, angle, speed);
             move = true;
@@ -84,6 +81,11 @@ public class Sphere : MonoBehaviour
 
     public void Hit() {
         Renderer.material.color = Color.green;
+        if (move) {
+            angularPosition += Time.deltaTime * speed;
+            angularPosition = angularPosition >= 2 * Mathf.PI ? angularPosition - 2 * Mathf.PI : angularPosition;
+            transform.localPosition = GetPosition();
+        }
         //Debug.Log("hit");
 
     }

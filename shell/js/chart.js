@@ -3,7 +3,7 @@ var echarts = require('echarts');
 var chartDom = document.getElementById('chart');
 var myChart = echarts.init(chartDom);
 
-function plotFigure(data) {
+function _plotFigure(data) {
     let option = {
         title: {
             // text: '极坐标双数值轴'

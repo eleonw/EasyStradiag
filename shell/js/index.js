@@ -56,7 +56,11 @@ function changeText(element, text) {
     element.text(text);
 }
 
-let figureData = [];
+let figureData = {degree: [], theta: []};
+
+function clearFigureData() {
+    figureData = {degree: [], theta: []};
+}
 
 function onMessage(msg) {
 
@@ -78,15 +82,14 @@ function onMessage(msg) {
 
         let angularPos = Number(data.targetAngularPosition);
         let degree = Number(data.strabismusDegree);
-        if (angularPos % 1 === 0) {
-            figureData.push([degree, angularPos]);
-        }
+
+        figureData.degree.push(degree);
+        figureData.theta.push(angularPos);
+
     } else {
         eles.hit.css('background-color', '#ff0000');
     }
-    
 }
-
 
 function enableInput() {
     $('#angle').removeAttr('readonly');
@@ -100,12 +103,11 @@ function disableInput() {
     $('#distance').attr('readonly', 'readonly');
     $('#speed').attr('readonly', 'readonly');
     $("input[name='eye']").attr('readonly', 'readonly');
-}
+};
 
 $('#start').on('click', () => {
 
-    figureData = [];
-
+    clearFigureData();
     plotFigure(figureData);
     let controlData = {
         controlNo: 0,
@@ -139,9 +141,10 @@ $('#stop').on('click', () => {
     $('#speed').val('');
     $("input[name='eye']").removeAttr('checked');
     enableInput();
+    clearFigureData();
 })
 
-plotFigure([0, 0]);
+clearFigureData();
 
 
 

@@ -4,15 +4,22 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "author": "Eleon Wan",
   "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.3.0"
+  },
   "dependencies": {
     "echarts": "^5.0.2",
-    "electron": "^11.3.0",
     "jquery": "^3.6.0",
     "webrtc-adapter": "^7.7.1",
     "ws": "^7.4.4"
+  },
+  "build": {
+    "appId": ""
   }
 }

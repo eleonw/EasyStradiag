@@ -104,11 +104,14 @@ button {
 }
 
 #chart {
+
+    background-color:  #3f3f3f;
+
     position: absolute;
     right: 30px;
-    top: 600px;
+    top: 520px;
 
-    width: 200px;
-    height: 200px;
+    /* width: 200px;
+    height: 200px; */
     /* background-color: white; */
 }

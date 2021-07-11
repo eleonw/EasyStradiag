@@ -82,16 +82,14 @@ public class GazeRay : MonoBehaviour
             globalEyeData.focusPoint = hitInfo.point;
             globalEyeData.expectedDirection = Vector3.Normalize(hitInfo.point - targetOrigin);
             globalEyeData.strabismusDegree = Vector3.Angle(targetDirection, globalEyeData.expectedDirection);
-            TargetObject.SendMessage("Hit");
+            if (Sphere.Instance.move) {
+                IPC.Instance.SendEyeData(globalEyeData);
+                TargetObject.SendMessage("Hit");
+            }
         } else {
             globalEyeData.hit = false;
             TargetObject.SendMessage("UnHit");
         }
-
-        IPC.Instance.SendEyeData(globalEyeData);
-
-        //Debug.Log("originGlobal: " + "x: " + baseOrigin.x.ToString("F4") + "y: " + baseOrigin.y.ToString("F4") + "z: " + baseOrigin.z.ToString("F4")
-        //    + "\n  direction Global: " + "x: " + baseDirection.x.ToString("F4") + "y: " + baseDirection.y.ToString("F4") + "z: " + baseDirection.z.ToString("F4"));
 
         GazeRayRenderer.SetPosition(0, baseOrigin - Camera.main.transform.up * 0.05f);
         GazeRayRenderer.SetPosition(1, baseOrigin + baseDirection * 10);
