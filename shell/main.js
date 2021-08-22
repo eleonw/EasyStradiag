@@ -1,6 +1,6 @@
 const { app, screen, BrowserWindow, Menu } = require('electron');
 
-// Menu.setApplicationMenu(null);
+Menu.setApplicationMenu(null);
 
 function createWindow () {
   let size = screen.getPrimaryDisplay().workAreaSize;
