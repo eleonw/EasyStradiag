@@ -6,7 +6,7 @@ console.log(`WebSocket listening on port ${PORT_NO}`);
 // Execute core.exe, which is expected to connect the ws once executed
 var exec = require('child_process').execFile;
 exec('./../core/core.exe', function(err, data) {
-    console.log("Execute core.js");
+    console.log("Execute core.exe");
 })
 
 ws.on('connection', ws => {
