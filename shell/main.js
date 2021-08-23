@@ -9,7 +9,7 @@ function createWindow () {
       webPreferences: {
         nodeIntegration: true
       },
-      icon: 'logo.ico'
+      icon: 'logos/logo.ico'
   })
   win.maximize();
   win.show();

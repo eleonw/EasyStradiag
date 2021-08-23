@@ -5,26 +5,198 @@
         <!-- <link rel="stylesheet" href="common.css"/> -->
         <style>
 
-            body {
-                width: 100%;
-                background-color: yellow;
+            * {
+                --color-panel: #ffffff;
+                --color-bg: #F2F3F4;
+                --colog-theme: #009CE0;
+                --color-shallow:  #767676;
+                --color-shadow: #c2c2c2;
             }
 
-            .menu {
+            #page {
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100%;
-                background-color:green;
+                height: 100%;
+
+                --menu-bar-height: 7%;
+                --status-bar-height: 3%; 
+                
+            }
+
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+            
+
+            #menu-bar {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 99;
+
+                width: 100%;
+                height: var(--menu-bar-height);
+                background-color:#ffffff;
+
+                display: flex;
+                flex-flow: row nowrap;
+
+                align-items: center;
+
+                box-shadow: 0 2px var(--color-shadow);
+
+                color: var(--color-shallow);
+            }
+
+            #logo {
+                width: 20%;
+            }
+
+            #setting {
+                margin-left: auto;
+                margin-right: 30px;
+
+                width: 25px;
+                height: auto;
+                color: var(--color-shallow);
+            }
+
+            #panels {
+
+                position: absolute;
+                top: var(--menu-bar-height);
+                left: 0;
+
+                height: calc(100% - var(--menu-bar-height) - var(--status-bar-height));
+                width: 100%;
+
+                background-color: var(--color-bg);
+
+                --info-panel-top: 0;
+                --info-panel-left: 0;
+                --info-panel-height: 20%;
+                --info-panel-width: 30%;
+
+                --control-panel-top: var(--info-panel-height);
+                --control-panel-left: 0;
+                --control-panel-height:  calc(100% - var(--info-panel-height));
+                --control-panel-width: var(--info-panel-width);
+
+                --video-panel-top: 0;
+                --video-panel-left: var(--control-panel-width);
+                --video-panel-height: 80%;
+                --video-panel-width: 50%;
+
+                --data-panel-top: 0;
+                --data-panel-left: calc(var(--video-panel-left) + var(--video-panel-width));
+                --data-panel-height: var(--video-panel-height);
+                --data-panel-width: calc(100% - var(--data-panel-left));
+                
+                --console-top: var(--video-panel-height);
+                --console-left: var(--control-panel-width);
+                --console-height: calc(100% - var(--console-top));
+                --console-width: calc(100% - var(--console-left));
+
+            }
+
+            #info-panel {
+                position: absolute;
+                top: var(--info-panel-top);
+                left: var(--info-panel-left);
+
+                height: var(--info-panel-height);
+                width: var(--info-panel-width);
+
+                background-color: orangered;
+            }
+
+            #control-panel {
+                position: absolute;
+                top: var(--control-panel-top);
+                left: var(--control-panel-left);
+
+                height: var(--control-panel-height);
+                width: var(--control-panel-width);
+
+                background-color: #009CE0;
+            }
+
+            #video-panel {
+                position: absolute;
+                left: var(--video-panel-left);
+                top: var(--video-panel-top);
+
+                width: var(--video-panel-width);
+                height: var(--video-panel-height);
+
+                background-color: yellow;
+            }
+
+            #data-panel {
+                position: absolute;
+                top: var(--data-panel-top);
+                left: var(--data-panel-left);
+
+                height: var(--data-panel-height);
+                width: var(--data-panel-width);
+
+                background-color: red;
+            }
+
+            #console {
+                position: absolute;
+                top: var(--console-top);
+                left: var(--console-left);
+
+                height: var(--console-height);
+                width: var(--console-width);
+
+                background-color: orange;
+            }
+
+            
+
+            #status-bar {
+                background-color: #ffffff;
+
+                position: absolute;
+                bottom: 0;
+                left: 0;
+
+                height: var(--status-bar-height);
+                width: 100%;
+
+                z-index: 99;
             }
 
 
         </style>
     </head>
     <body>
-        <div class="menu">
-            <div id="logo"><img src="../text_logo.png"></iframe></div>
+        <div id="page">
+            <div id="menu-bar">
+                <img id="logo" src="../logos/text_logo.png" οndragstart="return false;"></img>
+                <div></div>
+                <img id="setting" src="../icons/gear.svg"></img>
+            </div>
+            <div id="panels">
+                <div id="info-panel"></div>
+                <div id="control-panel"></div>
+                <div id="video-panel"></div>
+                <div id="data-panel"></div>
+                <div id="console"></div>
+            </div>
+            <div id="status-bar">
+
+            </div>
+            
         </div>
+        
     </body>
+
     <script src="common.js"></script>
 </html>
