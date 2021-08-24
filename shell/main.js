@@ -8,6 +8,9 @@ function createWindow () {
       show: false,
       webPreferences: {
         nodeIntegration: true
+        // defaultFontFamily: {
+        //   standard: "Microsoft YaHei"
+        // }
       },
       icon: 'logos/logo.ico'
   })

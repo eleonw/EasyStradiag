@@ -6,8 +6,8 @@ function plotFigure(data) {
             size: 8,
             color: '#000'
         },
-        width: 300,
-        height: 300,
+        width: 240,
+        height: 240,
         margin: {
             l: 40,
             r: 40,
@@ -17,7 +17,9 @@ function plotFigure(data) {
         // paper_bgcolor: '#3f3f3f',
         // plot_bgcolor: '#3f3f3f',
         dragmode: false,
-        orientation: -90
+        orientation: -90,
+
+        
     };
 
     var trace = {
@@ -31,5 +33,10 @@ function plotFigure(data) {
 
     var data = [trace]
 
-    Plotly.newPlot('chart', data, layout);
+    var config = {
+        "displaylogo": false,
+        modeBarButtonsToRemove: ['toImage', 'zoom2d']
+    }
+
+    Plotly.newPlot('chart', data, layout, config);
 }
