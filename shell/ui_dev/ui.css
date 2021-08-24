@@ -2,6 +2,8 @@
     --color-panel: #ffffff;
     --color-bg: #F2F3F4;
     --color-theme: #0F4776;
+
+    --color-sub: #fafafa;
     --color-font: #444444;
     --color-shallow:  #767676;
     --color-shadow: #c2c2c2;
@@ -25,6 +27,20 @@
     
 }
 
+#mask {
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: #ffffff;
+    opacity: 0.7;
+
+    z-index: 99;
+}
+
 
 img {
     max-width: 100%;
@@ -36,7 +52,7 @@ img {
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 99;
+    z-index: 2;
 
     width: 100%;
     height: var(--menu-bar-height);
@@ -183,7 +199,7 @@ img {
 
     height: 25px;
     width: auto;
-    margin: 10px 5px;
+    margin: 12px 5px;
 
     border-bottom: solid 2px var(--color-theme);
 
@@ -200,11 +216,10 @@ img {
 
 }
 
-.panel .header img {
-    width: 18px;
-    height: auto;
-    margin-right: 5px;
+.panel .header>button {
+    margin-left: auto;
 }
+
 
 .panel .header img:first-child {
     margin-left: auto;
@@ -259,12 +274,18 @@ img {
     height: var(--control-panel-height);
     width: var(--control-panel-width);
     
-/* 
-    background-color: #009CE0; */
+}
+
+#round-test-panel .body:last-child {
+    justify-content: center;
+    height: 55%;
 }
 
 #chart  {
     align-self: center;
+    position: relative;
+    top: -10px;
+    
 }
 
 #custom-test-panel .body {
@@ -309,6 +330,45 @@ th {
 
 }
 
+#vr-control-bnt {
+    font-size: 13px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: auto;
+
+    position: relative;
+    bottom: 3px;
+
+    font-weight: 600;
+
+}
+
+/* #vr-control-bnt {
+    width: 70px;
+    height: 20px;
+
+    font-weight: 600;
+
+    background-color: #ffffff;
+    color: var(--color-theme);
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: solid 2px var(--color-theme);
+    border-radius: 3px;
+} */
+
+#vr-control-bnt.active {
+    background-color: var(--color-theme);
+    color: #ffffff;
+}
+
 #video-panel .body {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -320,6 +380,7 @@ th {
     height: 100%;
 
     color: #ffffff;
+    font-weight: 400;
     background-color: #111111;
     border: solid 1px var(--color-shadow);
 }
@@ -423,7 +484,7 @@ th {
     height: var(--status-bar-height);
     width: 100%;
 
-    z-index: 99;
+    z-index: 2;
 
     box-shadow: 0 -2px 5px var(--color-shadow);
 
