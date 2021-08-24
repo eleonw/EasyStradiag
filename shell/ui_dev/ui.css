@@ -1,19 +1,4 @@
-* {
-    --color-panel: #ffffff;
-    --color-bg: #F2F3F4;
-    --color-theme: #0F4776;
 
-    --color-sub: #fafafa;
-    --color-font: #444444;
-    --color-shallow:  #767676;
-    --color-shadow: #c2c2c2;
-
-    /* font-family:"Microsoft Yahei"; */
-    font-family: "Microsoft YaHei";
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: .15em;
-}
 
 #page {
     position: absolute;

@@ -2,18 +2,65 @@
 <html>
     <head>
         <meta charset = "UTF-8">
-        <title>EasyStradiag</title>
-        <link rel="stylesheet" href="common.css"></link>
+        <title>填写基本信息</title>
+        
+        <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="./common.css"/>
+        <link rel="stylesheet" href="./custom_bootstrap.css">
+
         <style>
-            body {
-                background-color: #ffffff;
+            #page {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+
+                padding: 40px;
             }
+
+            #confirm {
+                margin-top: 20px;
+                font-weight: 600;
+
+                width: 100%;
+            }
+
+
+            
         </style>
+
     </head>
     <body>
-        <div>选择工作目录</div>
-        
+        <div id="page">
+            <form>
+
+                <div class="form-group">
+                <label for="inputEmail4">姓名</label>
+                <input type="email" class="form-control" id="inputEmail4">
+                </div>
+                <div class="form-group">
+                <label for="inputPassword4">性别</label>
+                <input type="password" class="form-control" id="inputPassword4">
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress">年龄</label>
+                  <input type="text" class="form-control" id="inputAddress">
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress2">编号</label>
+                  <input type="text" class="form-control" id="inputAddress2">
+                </div>
+                
+                <button type="submit" class="btn btn-mine" id="confirm">确 定</button>
+              </form>
+
+        </div>
     </body>
+
+    <script src="./lib/jquery.slim.min.js"></script>
+    <script src="./lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="common.js"></script>
 </html>

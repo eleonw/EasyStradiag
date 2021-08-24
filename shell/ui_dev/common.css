@@ -1,32 +1,16 @@
+* {
+    --color-panel: #ffffff;
+    --color-bg: #F2F3F4;
+    --color-theme: #0F4776;
 
+    --color-sub: #fafafa;
+    --color-font: #444444;
+    --color-shallow:  #767676;
+    --color-shadow: #c2c2c2;
 
-body {
-
-    --color-background: #F2F3F4;
-    --color-content: #ffffff;
-    --color-theme: #009CE0;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-
-
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-    
-    background-color: var(--color-background);
-    
-    color: #000000;
-    letter-spacing: .3em;
-}
-
-.panel {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    background-color: var(--color-content);
+    /* font-family:"Microsoft Yahei"; */
+    font-family: "Microsoft YaHei";
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .15em;
 }

@@ -22,8 +22,9 @@ let infoWin = new BrowserWindow({
 });
 
 function openInfoWin() {
-    infoWin.loadFile('./info.html');
+    console.log(1);
     infoWin.show();
+    infoWin.loadFile('ui_dev/info.html');
 }
 
 openInfoWin();
