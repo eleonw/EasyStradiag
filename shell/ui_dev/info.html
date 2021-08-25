@@ -17,23 +17,62 @@
                 bottom: 0;
 
                 padding: 40px;
+
+                
             }
 
-            #confirm {
-                margin-top: 20px;
-                font-weight: 600;
+            button {
+                
+                height: 30px;
+                width: 90px;
 
+                margin-left: 20px;
+                
+            }
+
+            #control {
+
+                position: absolute;
+                bottom: 0;
+                left: 0;
+
+                height: 80px;
                 width: 100%;
+
+                background-color: var(--color-bg);
+                box-shadow: 0 -1px 2px var(--color-shadow);
+
+                padding-right: 25px;
+
+                display: flex;
+                flex-direction: row;
+
+                justify-content: flex-end;
+                align-items: center;
             }
 
+            .form-control {
+                color: #000000 !important;
+            }
 
+            .custom-radio {
+                margin-left: 5px;
+                margin-right: 20px;
+            }
+
+            #customRadio1 {
+                margin-left: 10px;
+            }
+            #customRadio1{
+                margin-left: 30px;
+            }
             
         </style>
 
     </head>
     <body>
         <div id="page">
-            <form>
+            <div id="content">
 
                 <div class="form-group">
                 <label for="inputEmail4">姓名</label>
@@ -41,7 +80,16 @@
                 </div>
                 <div class="form-group">
                 <label for="inputPassword4">性别</label>
-                <input type="password" class="form-control" id="inputPassword4">
+                <div class="form-row">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio1">男</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio2">女</label>
+                      </div>
+                    </div>
                 </div>
                 <div class="form-group">
                   <label for="inputAddress">年龄</label>
@@ -51,9 +99,15 @@
                   <label for="inputAddress2">编号</label>
                   <input type="text" class="form-control" id="inputAddress2">
                 </div>
-                
-                <button type="submit" class="btn btn-mine" id="confirm">确 定</button>
-              </form>
+
+            </div>
+
+            <div id="control">
+                <button type="submit" class="btn btn-mine2" id="cancel">取消</button>
+                <button type="submit" class="btn btn-mine" id="confirm">确定</button>
+            </div>
+
+            
 
         </div>
     </body>

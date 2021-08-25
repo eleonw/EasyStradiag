@@ -1,12 +1,12 @@
 * {
     --color-panel: #ffffff;
-    --color-bg: #F2F3F4;
+    --color-bg: #f2f3f4d0;
     --color-theme: #0F4776;
 
     --color-sub: #fafafa;
     --color-font: #444444;
     --color-shallow:  #767676;
-    --color-shadow: #c2c2c2;
+    --color-shadow: #53535352;
 
     /* font-family:"Microsoft Yahei"; */
     font-family: "Microsoft YaHei";

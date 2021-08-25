@@ -494,3 +494,8 @@ th {
     color: #ffffff;
 
 }
+
+.dropdown-toggle {
+    border: none !important;
+    box-shadow: none !important;
+}

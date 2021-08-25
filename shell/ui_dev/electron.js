@@ -11,6 +11,8 @@ let infoWin = new BrowserWindow({
     maximizable: false,
     fullscreen: false,
 
+    // frame: false,
+
     parent: remote.getCurrentWindow(),
 
     title: '填写基本信息',
