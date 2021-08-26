@@ -6,8 +6,8 @@ function plotFigure(data) {
             size: 8,
             color: '#000'
         },
-        width: 240,
-        height: 240,
+        width: 300,
+        height: 300,
         margin: {
             l: 40,
             r: 40,
@@ -27,7 +27,11 @@ function plotFigure(data) {
         theta: data.theta,
         mode: 'lines',
         name: 'Strabismus Degree',
-        line: {color: 'blue'},
+        line: {
+            color: '#0F4776',
+            width: 1
+        },
+        // line: {color: '#FCBD16'},
         type: 'scatterpolar'
     }
 
@@ -41,15 +45,20 @@ function plotFigure(data) {
     Plotly.newPlot('chart', data, layout, config);
 }
 
+plotFigure( {
+    theta: [],
+    degree: []
+});
+
 function uiPlotFigure() {
     let data = {
         theta: [],
-        degree: []
+        degree: [],
     }
     
     for(let i = 0; i < 360; ++i) {
         data.theta.push(i);
-        data.degree.push(2 + Math.random())
+        data.degree.push(2 + Math.random() * 0.5)
     }
     
     plotFigure(data);

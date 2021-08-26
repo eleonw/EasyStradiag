@@ -17,7 +17,7 @@ function createWindow () {
   win.loadFile('./ui_dev/ui.html');
   win.show();
 
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow)

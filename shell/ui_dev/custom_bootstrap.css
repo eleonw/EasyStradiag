@@ -2,7 +2,7 @@
     display: none;
 }
 
-.btn {
+.btn-mine .btn-mine2 {
     font-size: 13px;
     font-weight: 600;
 }
@@ -150,5 +150,12 @@ letter-spacing: .3em;
     background-color: transparent;
   }
   
+  .form-group label, .form-group legend {
+    color: var(--color-shallow);
+    font-size: 14px !important;
+  }
 
+  .form-group input[type="radio"]+label {
+    color: #000000;
+  }
   

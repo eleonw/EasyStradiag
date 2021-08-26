@@ -2,9 +2,9 @@ const { remote } = require('electron');
 
 const { dialog, BrowserWindow } = remote;
 
-let infoWin = new BrowserWindow({
+let paraWin = new BrowserWindow({
     width: 600,
-    height: 450,
+    height: 500,
     center: true,
     resizable: false,
     minimizable: false,
@@ -15,7 +15,7 @@ let infoWin = new BrowserWindow({
 
     parent: remote.getCurrentWindow(),
 
-    title: '填写基本信息',
+    title: '测试参数设置',
     icon: 'logos/logo.ico',
 
     autoHideMenuBar: true,
@@ -23,10 +23,51 @@ let infoWin = new BrowserWindow({
     show: false,
 });
 
-function openInfoWin() {
-    console.log(1);
-    infoWin.show();
-    infoWin.loadFile('ui_dev/info.html');
+let infoWin = new BrowserWindow({
+    width: 600,
+    height: 500,
+    center: true,
+    resizable: false,
+    minimizable: false,
+    maximizable: false,
+    fullscreen: false,
+
+    // frame: false,
+
+    parent: remote.getCurrentWindow(),
+
+    title: '基本信息填写',
+    icon: 'logos/logo.ico',
+
+    autoHideMenuBar: true,
+
+    show: false,
+});
+
+function maskon() {
+    $("#mask").removeAttr("hidden");
 }
 
-openInfoWin();
+function openInfoWin() {
+    infoWin.loadFile('ui_dev/info.html');
+    infoWin.show();
+}
+
+function openParaWin(testName) {
+    paraWin.loadFile('./ui_dev/test_paras/' + testName + '.html');
+    paraWin.show();
+    // infoWin.loadFile('ui_dev/test_paras/firstpos.html');
+}
+
+function openWorkingDirDialg() {
+    maskon();
+    dialog.showOpenDialogSync({
+        title: '请选择工作路径',
+        properties: ['openDirectory', 'promptToCreate']
+    })
+}
+
+// openWorkingDirDialg();
+
+// openInfoWin();
+openParaWin('firstpos');

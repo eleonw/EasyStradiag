@@ -60,12 +60,15 @@ img {
     width: auto;
 }
 
+
 #setting, #menu {
     margin-right: 15px;
 
-    width: 20px;
-    height: auto;
     color: var(--color-shallow);
+}
+
+#setting:active, #menu:active, #setting.active, #menu.active {
+    color: white;
 }
 
 
@@ -261,6 +264,12 @@ img {
     
 }
 
+#control-panel .body button.btn {
+    width: 100px;
+    margin-top: auto;
+    margin-left: auto;
+}
+
 #round-test-panel .body:last-child {
     justify-content: center;
     height: 55%;
@@ -276,6 +285,12 @@ img {
 #custom-test-panel .body {
     height: 40%;
 }
+
+#custom-test-panel .header > img {
+    width: 20px;
+    height: auto;
+}
+    
 
 table {
     overflow: auto;
@@ -313,6 +328,10 @@ th {
     width: var(--video-panel-width);
     height: var(--video-panel-height);
 
+}
+
+#video-panel .body {
+    background-color: green;
 }
 
 #vr-control-bnt {
@@ -369,6 +388,8 @@ th {
     background-color: #111111;
     border: solid 1px var(--color-shadow);
 }
+
+
 
 #data-panel {
     position: absolute;
