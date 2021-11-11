@@ -1,4 +1,4 @@
-# strabismus-diagnosis
+# EasyStradiag
 This is a joint project between [Beihang University](https://www.buaa.edu.cn/) and [Peking Union Medical College Hospital](https://www.pumch.cn/index.html), aiming at diagnosing strabismus of different kind with the help of VR and eye tracking technologies. 
 
 ## Project Composition
